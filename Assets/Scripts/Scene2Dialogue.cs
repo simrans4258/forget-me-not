@@ -31,7 +31,9 @@ public class Scene2Dialogue : MonoBehaviour
     public GameObject Choice1b;
     public GameObject NextSceneButton;
     public GameObject nextButton;
-    //public AudioSource audioSource1;
+    public AudioSource backgroundMusic1;
+    public AudioSource backgroundMusic2;
+    public AudioSource recordScratching;
     private bool allowSpace = true;
 
     // Set initial visibility. Added images or buttons need to also be SetActive(false);
@@ -47,8 +49,8 @@ public class Scene2Dialogue : MonoBehaviour
         NextSceneButton.SetActive(false);
         nextButton.SetActive(true);
         nameBox.SetActive(false);
-        primeInt = 1;
-        currentInt = 1;
+        primeInt = 0;
+        //currentInt = 1;
     }
 
     // Update is called once per frame
@@ -72,12 +74,13 @@ public class Scene2Dialogue : MonoBehaviour
 
     public void Next() 
     {
-        primeInt++;
-        currentInt++;
+        primeInt+=1;
+        //currentInt++;
         if (primeInt == 1)
         {
             DialogueDisplay.SetActive(true);
             regularText.text = "River High School, 9:00am";
+            backgroundMusic1.Play();
         }
         else if (primeInt == 2)
         {
@@ -200,11 +203,15 @@ public class Scene2Dialogue : MonoBehaviour
         }
         else if (primeInt == 35)
         {
+            backgroundMusic1.Stop();
+            recordScratching.Play();
             Char1name.text = "You";
-            StartCoroutine(TypeText(Char1speech, "Wait, what."));
+            StartCoroutine(TypeText(Char1speech, "<i>Wait, <b>what.</b></i>"));
         }
         else if (primeInt == 36)
         {
+            recordScratching.Stop();
+            backgroundMusic2.Play();
             Char1name.text = "You";
             StartCoroutine(TypeText(Char1speech, "I just, stood there, after that. Screw school, what just happened?"));
         }
@@ -212,6 +219,38 @@ public class Scene2Dialogue : MonoBehaviour
         {
             Char1name.text = "You";
             StartCoroutine(TypeText(Char1speech, "<i>There is no way. There is no way.</i> I look down on myself to my hands."));
+        }
+        else if (primeInt == 38)
+        {
+            Char1name.text = "You";
+            StartCoroutine(TypeText(Char1speech, "Huh?!"));
+        }
+        else if (primeInt == 39)
+        {
+            Char1name.text = "You";
+            StartCoroutine(TypeText(Char1speech, "I couldn't believe my it. I rubbed my eyes over and over again and keep looking at my hands to see. But..."));
+        }
+        else if (primeInt == 40) 
+        {
+            StartCoroutine(FadeOut(ArtBG1));
+            ArtBG1.SetActive(false);
+            StartCoroutine(FadeIn(ArtBG2));
+            ArtBG2.SetActive(true);
+            Char1name.text = "You";
+            StartCoroutine(TypeText(Char1speech, "I'm...faded. My hands are literally see through."));
+        }
+        else if (primeInt == 41) 
+        {
+            Char1name.text = "You";
+            StartCoroutine(TypeText(Char1speech, "<i>That's why no one noticed me?! What the hell is going on?!"));
+        }
+        else if (primeInt == 42) 
+        {
+            Char1name.text = "You";
+            StartCoroutine(TypeText(Char1speech, "But before I feel like I could collapse from shock, something even stranger happens..."));
+            nextButton.SetActive(false);
+            allowSpace = false;
+            NextSceneButton.SetActive(true);
         }
     }
 
@@ -238,7 +277,8 @@ public class Scene2Dialogue : MonoBehaviour
 
     public void SceneChange()
     {
-        SceneManager.LoadScene("Scene2");
+        StartCoroutine(FadeOut(ArtBG2));
+        SceneManager.LoadScene("Scene3");
     }
 
     IEnumerator TypeText(TMP_Text target, string fullText)
@@ -263,11 +303,13 @@ public class Scene2Dialogue : MonoBehaviour
     IEnumerator FadeIn(GameObject fadeImage)
     {
         float alphaLevel = 0;
+        float delay = 0.01f;
         fadeImage.GetComponent<Image>().color = new Color(1, 1, 1, alphaLevel);
         for (int i = 0; i < 100; i++)
         {
             alphaLevel += 0.01f;
             yield return null;
+            yield return new WaitForSeconds(delay);
             fadeImage.GetComponent<Image>().color = new Color(1, 1, 1, alphaLevel);
             Debug.Log("Alpha is: " + alphaLevel);
         }
@@ -276,11 +318,13 @@ public class Scene2Dialogue : MonoBehaviour
     IEnumerator FadeOut(GameObject fadeImage)
     {
         float alphaLevel = 1;
+        float delay = 0.01f;
         fadeImage.GetComponent<Image>().color = new Color(1, 1, 1, alphaLevel);
         for (int i = 0; i < 100; i++)
         {
             alphaLevel -= 0.01f;
             yield return null;
+            yield return new WaitForSeconds(delay);
             fadeImage.GetComponent<Image>().color = new Color(1, 1, 1, alphaLevel);
             Debug.Log("Alpha is: " + alphaLevel);
         }

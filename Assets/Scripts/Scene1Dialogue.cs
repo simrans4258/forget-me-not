@@ -30,7 +30,8 @@ public class Scene1Dialogue : MonoBehaviour
     public GameObject Choice1b;
     public GameObject NextSceneButton;
     public GameObject nextButton;
-    //public AudioSource audioSource1;
+    public AudioSource backgroundMusic;
+    public AudioSource alarm;
     private bool allowSpace = true;
 
     // Set initial visibility. Added images or buttons need to also be SetActive(false);
@@ -75,13 +76,13 @@ public class Scene1Dialogue : MonoBehaviour
         primeInt += 1;
         if (primeInt == 1)
         {
-            // audioSource1.Play();
             DialogueDisplay.SetActive(true);
             regularText.text = "April 27th, 20xx, 8:00am. Bedroom.";
         }
         else if (primeInt == 2)
         {
             /*ArtChar1a.SetActive(true);*/
+            alarm.Play();
             StartCoroutine(TypeText(regularText, "Alarm Clock: BEEP BEEP BEEP BEEP"));
         }
         else if (primeInt == 3)
@@ -97,11 +98,13 @@ public class Scene1Dialogue : MonoBehaviour
         }
         else if (primeInt == 5)
         {
+            alarm.Stop();
             Char1name.text = "You";
-            StartCoroutine(TypeText(Char1speech, "<i>Hah, what time is it?</i> I barely take my phone from my bedstand."));
+            StartCoroutine(TypeText(Char1speech, "<i>Hah, what time is it?</i> I turn off my alarm and take my phone from my bedstand."));
         }
         else if (primeInt == 6)
         {
+            backgroundMusic.Play();
             Char1name.text = "You";
             StartCoroutine(TypeText(Char1speech, "<b>ITS 8 ALREADY?!!?!</b> IM GONNA BE LATE FOR SCHOOL!"));
         }
@@ -201,7 +204,9 @@ public class Scene1Dialogue : MonoBehaviour
 
     public void SceneChange()
     {
+        StartCoroutine(FadeOut(ArtBG2));
         SceneManager.LoadScene("Scene2");
+        backgroundMusic.Stop();
     }
 
     IEnumerator TypeText(TMP_Text target, string fullText)
@@ -221,11 +226,13 @@ public class Scene1Dialogue : MonoBehaviour
     IEnumerator FadeIn(GameObject fadeImage)
     {
         float alphaLevel = 0;
+        float delay = 0.01f;
         fadeImage.GetComponent<Image>().color = new Color(1, 1, 1, alphaLevel);
         for (int i = 0; i < 100; i++)
         {
             alphaLevel += 0.01f;
             yield return null;
+            yield return new WaitForSeconds(delay);
             fadeImage.GetComponent<Image>().color = new Color(1, 1, 1, alphaLevel);
             Debug.Log("Alpha is: " + alphaLevel);
         }
@@ -234,11 +241,13 @@ public class Scene1Dialogue : MonoBehaviour
     IEnumerator FadeOut(GameObject fadeImage)
     {
         float alphaLevel = 1;
+        float delay = 0.01f;
         fadeImage.GetComponent<Image>().color = new Color(1, 1, 1, alphaLevel);
         for (int i = 0; i < 100; i++)
         {
             alphaLevel -= 0.01f;
             yield return null;
+            yield return new WaitForSeconds(delay);
             fadeImage.GetComponent<Image>().color = new Color(1, 1, 1, alphaLevel);
             Debug.Log("Alpha is: " + alphaLevel);
         }
