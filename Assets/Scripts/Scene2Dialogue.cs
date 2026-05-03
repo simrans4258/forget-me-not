@@ -47,7 +47,7 @@ public class Scene2Dialogue : MonoBehaviour
         Choice1a.SetActive(false);
         Choice1b.SetActive(false);
         NextSceneButton.SetActive(false);
-        nextButton.SetActive(true);
+        nextButton.SetActive(false);
         nameBox.SetActive(false);
         primeInt = 0;
         //currentInt = 1;
@@ -79,6 +79,7 @@ public class Scene2Dialogue : MonoBehaviour
         if (primeInt == 1)
         {
             DialogueDisplay.SetActive(true);
+            nextButton.SetActive(true);
             regularText.text = "River High School, 9:00am";
             backgroundMusic1.Play();
         }

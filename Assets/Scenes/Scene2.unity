@@ -1914,8 +1914,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Scene1Dialogue, Assembly-CSharp
+      - m_Target: {fileID: 830990853}
+        m_TargetAssemblyTypeName: Scene2Dialogue, Assembly-CSharp
         m_MethodName: Choice1bFunct
         m_Mode: 1
         m_Arguments:

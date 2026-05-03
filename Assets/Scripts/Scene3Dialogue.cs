@@ -17,7 +17,7 @@ public class Scene3Dialogue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nextButton.SetActive(true);
+        nextButton.SetActive(false);
         primeInt = 0;
         backgroundMusic1.Play();
         DialogueDisplay.SetActive(false);
@@ -48,6 +48,7 @@ public class Scene3Dialogue : MonoBehaviour
         if (primeInt == 1) 
         {
             DialogueDisplay.SetActive(true);
+            nextButton.SetActive(true);
             StartCoroutine(TypeText(regularText, "Next part coming eventually...maybe...later."));
         }
         else if (primeInt == 2) 

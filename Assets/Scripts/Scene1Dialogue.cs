@@ -45,7 +45,7 @@ public class Scene1Dialogue : MonoBehaviour
         Choice1a.SetActive(false);
         Choice1b.SetActive(false);
         NextSceneButton.SetActive(false);
-        nextButton.SetActive(true);
+        nextButton.SetActive(false);
         nameBox.SetActive(false);
         primeInt = 0;
     }
@@ -77,6 +77,7 @@ public class Scene1Dialogue : MonoBehaviour
         if (primeInt == 1)
         {
             DialogueDisplay.SetActive(true);
+            nextButton.SetActive(true);
             regularText.text = "April 27th, 20xx, 8:00am. Bedroom.";
         }
         else if (primeInt == 2)
